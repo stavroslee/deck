@@ -6,6 +6,7 @@ import DeckListComponent from '../components/DeckListComponent';
 import TemplateModal from '../components/TemplateModal';
 import templates from '../templates';
 import styles from '../styles';
+import Link from 'next/link';
 
 const Index = () => {
   const [decks, setDecks] = useState([]);
@@ -57,6 +58,8 @@ const Index = () => {
     <div style={styles.container}>
       <h1 style={styles.title}>Slide Decks</h1>
       <button onClick={createNewDeck} style={styles.button}>Create New Slide Deck</button>
+      <Link href="/subscriptions"><button style={styles.button}>View Subscription Plans</button></Link>
+      <Link href="/dashboard"><button style={styles.button}>Dashboard</button></Link>
       {decks.length > 0 ? (
         <div style={styles.gridContainer}>
           <DeckListComponent decks={decks} updateDeckTitle={updateDeckTitle} />

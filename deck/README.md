@@ -8,10 +8,6 @@ First, run the development server:
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -36,3 +32,13 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 Lets add subscription stripe to the project so they get access to templates & AI suggestions
+
+Test hitting token limit - needs to return proper error message and redirect to subscription page
+
+Test cancelling subscription
+Test changing subscription
+
+Test blocking non subscribers from accessing AI suggestions
+Test allowing to purchase additional tokens
+
+Add context to templates to give AI more context on how it should help.

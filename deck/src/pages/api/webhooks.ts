@@ -1,5 +1,7 @@
 import { buffer } from 'micro';
 import Stripe from 'stripe';
+import { Database } from '../../lib/database';
+import { getDatabase } from '@/lib/databaseFactory';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -22,13 +24,31 @@ export default async function handler(req, res) {
     return;
   }
 
+  const db: Database = getDatabase();
+
   // Handle the event
   switch (event.type) {
+    case 'checkout.session.completed':
+      const session = event.data.object;
+      console.log(`Checkout session completed: ${session.id}`);
+      const customerId = session.customer;
+      const subscriptionId = session.subscription;
+      await db.saveSubscription(customerId, subscriptionId, 'active');
+      break;
     case 'customer.subscription.created':
+      const createdSubscription = event.data.object;
+      console.log(`Subscription created: ${createdSubscription.id}`);
+      await db.saveSubscription(createdSubscription.customer, createdSubscription.id, createdSubscription.status);
+      break;
     case 'customer.subscription.updated':
+      const updatedSubscription = event.data.object;
+      console.log(`Subscription updated: ${updatedSubscription.id}`);
+      await db.updateSubscription(updatedSubscription.id, updatedSubscription.status);
+      break;
     case 'customer.subscription.deleted':
-      const subscription = event.data.object;
-      // Handle subscription event
+      const deletedSubscription = event.data.object;
+      console.log(`Subscription deleted: ${deletedSubscription.id}`);
+      await db.deleteSubscription(deletedSubscription.id);
       break;
     default:
       console.log(`Unhandled event type ${event.type}`);

@@ -1,14 +1,28 @@
-import type { AppProps } from 'next/app';
-import { Inter } from 'next/font/google';
+import { ClerkProvider, SignedIn, SignedOut, RedirectToSignIn } from '@clerk/nextjs';
+import { useRouter } from 'next/router';
 import '../app/globals.css';
 
-const inter = Inter({ subsets: ["latin"] });
+const publicPages = ['/'];
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }) {
+  const { pathname } = useRouter();
+  const isPublicPage = publicPages.includes(pathname);
+
   return (
-    <div className={inter.className}>
-      <Component {...pageProps} />
-    </div>
+    <ClerkProvider>
+      {isPublicPage ? (
+        <Component {...pageProps} />
+      ) : (
+        <>
+          <SignedIn>
+            <Component {...pageProps} />
+          </SignedIn>
+          <SignedOut>
+            <RedirectToSignIn />
+          </SignedOut>
+        </>
+      )}
+    </ClerkProvider>
   );
 }
 

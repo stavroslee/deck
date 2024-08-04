@@ -9,10 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^5.2.12",
     "@mdx-js/loader": "^3.0.1",
     "@next/mdx": "^14.2.5",
     "@stripe/stripe-js": "^4.1.0",
+    "@supabase/supabase-js": "^2.45.0",
     "micro": "^10.0.1",
+    "mongodb": "^6.8.0",
     "next": "14.2.5",
     "openai": "^4.54.0",
     "react": "^18",

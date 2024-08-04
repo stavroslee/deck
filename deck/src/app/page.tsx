@@ -56,7 +56,7 @@ const Index = () => {
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>Slide Decks</h1>
+      <h1 style={styles.title}>Simple Slides</h1>
       <button onClick={createNewDeck} style={styles.button}>Create New Slide Deck</button>
       <Link href="/subscriptions"><button style={styles.button}>View Subscription Plans</button></Link>
       <Link href="/dashboard"><button style={styles.button}>Dashboard</button></Link>

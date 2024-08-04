@@ -6,6 +6,7 @@ const styles = {
   },
   title: {
     color: '#f9f9f9',
+    fontSize: '48px',
   },
   button: {
     display: 'block',

@@ -1,9 +1,15 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { getAuth } from '@clerk/nextjs/server';
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(req, res) {
+  const { userId } = getAuth(req);
+
+  if (!userId) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+  
   if (req.method === 'POST') {
     const { planId } = req.body;
 
@@ -19,6 +25,9 @@ export default async function handler(req, res) {
         mode: 'subscription',
         success_url: `${req.headers.origin}/success?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${req.headers.origin}/cancel`,
+        metadata: {
+          userId, // Add userId to metadata
+        },
       });
 
       res.status(200).json({ id: session.id });

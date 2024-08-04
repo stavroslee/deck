@@ -1,6 +1,8 @@
+'use server';
 import { Database } from './database';
 import MemoryDatabase from './memoryDatabase';
 import MongoDBDatabase from './mongoDatabase';
+import SupabaseDatabase from './supabaseDatabase';
 // import other database implementations here as needed
 // import MongoDBDatabase from './mongoDatabase';
 // import PostgreSQLDatabase from './postgresqlDatabase';

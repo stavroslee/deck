@@ -1,5 +1,6 @@
 'use client';
 
+import { useUser } from '@clerk/nextjs';
 import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
@@ -19,6 +20,7 @@ interface PageParams {
 }
 
 const DeckView = ({ params }: { params: PageParams }) => {
+  const { user } = useUser();
   const id = parseInt(params.id);
   const [decks, setDecks] = useState<Deck[]>([]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
@@ -164,7 +166,7 @@ const DeckView = ({ params }: { params: PageParams }) => {
   };
 
   const generateAISuggestion = async () => {
-    // to generate an AI suggestion we should look at
+    // move context gen to /api
     const currentSlide = deck.slides[currentSlideIndex];
 
     const prompt = `you're helping a user create a slide deck, each slide contains a title and multiple pages.  each page is an alternative version of this slide.  You're going to suggest a new page for the current slide.

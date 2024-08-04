@@ -1,6 +1,7 @@
 'use client';
 
 import { useUser } from '@clerk/nextjs';
+import { useRouter } from 'next/router';
 import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
@@ -15,13 +16,10 @@ interface Deck {
   slides: Slide[];
 }
 
-interface PageParams {
-  id: string;
-}
-
-const DeckView = ({ params }: { params: PageParams }) => {
+const DeckView = () => {
+  const router = useRouter();
+  const id = parseInt(router.query.id as string);
   const { user } = useUser();
-  const id = parseInt(params.id);
   const [decks, setDecks] = useState<Deck[]>([]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
@@ -169,8 +167,9 @@ const DeckView = ({ params }: { params: PageParams }) => {
     // move context gen to /api
     const currentSlide = deck.slides[currentSlideIndex];
 
-    const prompt = `you're helping a user create a slide deck, each slide contains a title and multiple pages.  each page is an alternative version of this slide.  You're going to suggest a new page for the current slide.
-      Return a suggestion that is different from other pages on this slide that also help strengthen the narrative for the over all deck.  Consider all the other slides their titles and pages when coming up with a suggestion.  Only return the content for the slide you're suggesting.  No title no page.  given:`;
+    const prompt = `you're helping a user create a deck.  a deck is an array of slides and each slide contains a title and multiple variants called pages.  You're going to suggest a new page for the current slide.
+      Return a suggestion that is different from other pages on this slide that also helps tell a compelling story for this deck.  Consider all the other slides their titles and pages when coming up with a suggestion.  
+      Only return the content for the slide you're suggesting.  No title no page number.  Keep your answer in the same style and length as the other slides on this page. the style should be one sentence or bullet points. given:`;
 
     let context = `${prompt}\n\ndeck - ${deck.name}\n`;
     for (let i = 0; i < deck.slides.length; i++) {

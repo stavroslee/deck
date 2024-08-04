@@ -5,15 +5,11 @@ const SubscriptionDashboard = ({ subscription, tokenBalance }) => {
     <div style={styles.container}>
       <h2 style={styles.header}>My Subscription</h2>
       <div style={styles.subscriptionDetails}>
-        <p><strong>Plan:</strong> {subscription.plan.nickname}</p>
-        <p><strong>Status:</strong> {subscription.status}</p>
-        <p><strong>Current Period Start:</strong> {new Date(subscription.current_period_start * 1000).toLocaleDateString()}</p>
-        <p><strong>Current Period End:</strong> {new Date(subscription.current_period_end * 1000).toLocaleDateString()}</p>
+        <p style={styles.detailRow}><strong>Status:</strong> {subscription.status}</p>
       </div>
       <h2 style={styles.header}>My Tokens</h2>
       <div style={styles.tokenDetails}>
-        <p><strong>Token Balance:</strong> {tokenBalance}</p>
-        <p><strong>Tokens Used:</strong> {subscription.tokensUsed}</p>
+        <p style={styles.detailRow}><strong>Token Balance:</strong> {tokenBalance}</p>
       </div>
     </div>
   );
@@ -22,36 +18,37 @@ const SubscriptionDashboard = ({ subscription, tokenBalance }) => {
 const styles = {
   container: {
     padding: '20px',
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#333',
     borderRadius: '8px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
     maxWidth: '600px',
     margin: '20px auto',
     textAlign: 'left',
+    color: '#f9f9f9',
   },
   header: {
     fontSize: '24px',
     marginBottom: '20px',
-    color: '#333',
+    color: '#f9f9f9',
     textAlign: 'center',
   },
   subscriptionDetails: {
     marginBottom: '30px',
     padding: '20px',
-    backgroundColor: '#fff',
+    backgroundColor: '#444',
     borderRadius: '8px',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
   },
   tokenDetails: {
     padding: '20px',
-    backgroundColor: '#fff',
+    backgroundColor: '#444',
     borderRadius: '8px',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
   },
   detailRow: {
     marginBottom: '10px',
     fontSize: '16px',
-    color: '#555',
+    color: '#ccc',
   },
 };
 

@@ -40,7 +40,7 @@ const Index = () => {
       setTimeout(() => {
         const newDeckIndex = updatedDecks.length - 1;
         router.push(`/deck/${newDeckIndex}`);
-      }, 0);
+      }, 100);
     }
     setShowModal(false);
   };
